@@ -2,7 +2,7 @@
 
 Requires global variables:
 
-* QLIST = "queue1,queue2,queue3,..."
+* QLIST = "queue1 queue2 queue3 ..."
 
 Optional global variables:
 

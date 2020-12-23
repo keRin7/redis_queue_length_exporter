@@ -8,7 +8,7 @@ REDIS_HOSTNAME = os.getenv('HOSTNAME', '127.0.0.1')
 REDIS_PORT = os.getenv('PORT', 6379)
 REDIS_PASS = os.getenv('REDIS_PASS', 'none')
 ENV = os.getenv('ENV', 'local')
-QLIST = os.getenv('QLIST').split(',')
+QLIST = os.getenv('QLIST').split(' ')
 
 if QLIST is None:
     sys.exit('Please set env: QLIST')
