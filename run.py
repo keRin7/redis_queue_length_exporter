@@ -2,9 +2,9 @@ from prometheus_client import make_wsgi_app, Gauge
 from wsgiref.simple_server import make_server
 import redis,sys,os
 
-HOSTNAME = os.getenv('HOSTNAME', '127.0.0.1')
-PORT = os.getenv('PORT', 9000)
-REDIS_HOSTNAME = os.getenv('HOSTNAME', '127.0.0.1')
+APP_HOSTNAME = os.getenv('APP_HOSTNAME', '127.0.0.1')
+APP_PORT = os.getenv('APP_PORT', 9000)
+REDIS_HOSTNAME = os.getenv('REDIS_HOSTNAME', '127.0.0.1')
 REDIS_PORT = os.getenv('PORT', 6379)
 REDIS_PASS = os.getenv('REDIS_PASS', 'none')
 ENV = os.getenv('ENV', 'local')
@@ -33,5 +33,5 @@ def my_app(environ, start_fn):
         get_metrics()
         return metrics_app(environ, start_fn)
 
-httpd = make_server(HOSTNAME, PORT, my_app)
+httpd = make_server(APP_HOSTNAME, APP_PORT, my_app)
 httpd.serve_forever()

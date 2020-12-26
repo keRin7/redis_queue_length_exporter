@@ -6,8 +6,8 @@ Requires global variables:
 
 Optional global variables:
 
-* HOSTNAME: (default: 127.0.0.1)
-* PORT: (default: 9000)
+* APP_HOSTNAME: (default: 127.0.0.1)
+* APP_PORT: (default: 9000)
 * REDIS_HOSTNAME = (default: 127.0.0.1)
 * REDIS_PORT = (default: 6379)
 * REDIS_PASS = (default: none)
