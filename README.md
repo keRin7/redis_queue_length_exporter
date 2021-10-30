@@ -13,4 +13,8 @@ Optional global variables:
 * REDIS_PASS = (default: none)
 * ENV = (default: local)
 
+* SENTINEL_HOST (default: none)
+* SENTINEL_REDIS_NAME (default: none)
+* SENTINEL_PORT (default: 26379)
+* SENTINEL_REDIS_PASSWORD (default: none)
 

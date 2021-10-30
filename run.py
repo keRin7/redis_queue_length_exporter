@@ -1,5 +1,6 @@
 from prometheus_client import make_wsgi_app, Gauge
 from wsgiref.simple_server import make_server
+from redis.sentinel import Sentinel
 import redis,sys,os
 
 APP_HOSTNAME = os.getenv('APP_HOSTNAME', '127.0.0.1')
@@ -9,6 +10,10 @@ REDIS_PORT = os.getenv('PORT', 6379)
 REDIS_PASS = os.getenv('REDIS_PASS', 'none')
 ENV = os.getenv('ENV', 'local')
 QLIST = os.getenv('QLIST').split(' ')
+SENTINEL_HOST = os.getenv('SENTINEL_HOST', 'none')
+SENTINEL_REDIS_NAME = os.getenv('SENTINEL_REDIS_NAME', 'none')                            
+SENTINEL_PORT = os.getenv('SENTINEL_PORT', 26379)
+SENTINEL_REDIS_PASSWORD = os.getenv('SENTINEL_REDIS_PASSWORD', 'none')
 
 if QLIST is None:
     sys.exit('Please set env: QLIST')
@@ -16,7 +21,12 @@ if QLIST is None:
 g = Gauge('redis_queue_length', 'Length of queues', ['env','queue_name'])
 
 def get_metrics():
-    r = redis.Redis(host=REDIS_HOSTNAME, port=REDIS_PORT, password=REDIS_PASS)
+    if SENTINEL_HOST == 'none':
+        r = redis.Redis(host=REDIS_HOSTNAME, port=REDIS_PORT, password=REDIS_PASS)
+    else:
+        hosts = [SENTINEL_HOST]
+        sentinel = Sentinel([(h, SENTINEL_port) for h in hosts], socket_timeout=0.1)
+        r = sentinel.master_for(SENTINEL_REDIS_NAME, password=SENTINEL_REDIS_PASSWORD)
     try:
         r.ping()
     except redis.ConnectionError:
