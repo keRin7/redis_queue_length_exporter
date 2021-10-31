@@ -9,7 +9,7 @@ jobs:
 
   build:
     env:
-      IMAGE_NAME: skerin44/redis_queue_length_exporter:
+      IMAGE_NAME: skerin44/redis_queue_length_exporter
     runs-on: ubuntu-latest
 
     steps:
